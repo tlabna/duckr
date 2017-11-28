@@ -7,7 +7,7 @@ class MainContainer extends React.Component {
   render () {
     return (
       <div className={container}>
-        <Navigation isAuthed={true} />
+        <Navigation isAuthed={false} />
         <div className={innerContainer}>
           {this.props.children}
         </div>
@@ -17,7 +17,7 @@ class MainContainer extends React.Component {
 }
 
 MainContainer.propTypes = {
-  children: PropTypes.object.isRequired
+  children: PropTypes.any.isRequired
 }
 
 export default MainContainer
