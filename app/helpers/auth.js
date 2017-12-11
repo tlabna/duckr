@@ -1,4 +1,4 @@
-export default function auth () {
+export function auth () {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve({
@@ -8,4 +8,13 @@ export default function auth () {
       })
     }, 2000)
   })
+}
+
+export function checkIfAuthed (store) {
+  // Ignoring Firebase.
+  return store.getState().isAuthed
+}
+
+export function logout () {
+  console.log('Logged Out!')
 }

@@ -7,8 +7,10 @@ import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/users'
 
 class AuthenticateContainer extends React.Component {
-  handleAuth = () => {
+  handleAuth = (e) => {
+    e.preventDefault()
     this.props.fetchAndHandleAuthedUser()
+      .then(() => this.context.router.history.replace('feed'))
   }
 
   render () {
@@ -25,6 +27,10 @@ AuthenticateContainer.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
   fetchAndHandleAuthedUser: PropTypes.func.isRequired
+}
+
+AuthenticateContainer.contextTypes = {
+  router: PropTypes.object.isRequired
 }
 
 // Map state to props for state that component needs only

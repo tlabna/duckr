@@ -52,7 +52,8 @@ const developmentConfig = {
     contentBase: PATHS.build,
     hot: true,
     inline: true,
-    progress: true
+    progress: true,
+    historyApiFallback: true
   },
   plugins: [HTMLWebpackPluginConfig, new webpack.HotModuleReplacementPlugin()] // Hot Module Replacement allows changes to update in React but can maintain it's state (i.e. it won't refresh)
 }
