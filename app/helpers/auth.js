@@ -1,13 +1,8 @@
+import { ref, firebaseAuth } from 'config/constants'
+
 export function auth () {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve({
-        name: 'Tamer L',
-        avatar: 'https://avatars2.githubusercontent.com/u/12438014?s=400&u=2ccfd1c5a70c4fd1d061821e6484e51129e641d9&v=4',
-        uid: 'tlabna'
-      })
-    }, 2000)
-  })
+  // Will return a promise
+  return firebaseAuth().signInWithPopup(new firebaseAuth.FacebookAuthProvider())
 }
 
 export function checkIfAuthed (store) {
@@ -16,5 +11,25 @@ export function checkIfAuthed (store) {
 }
 
 export function logout () {
-  console.log('Logged Out!')
+  return firebaseAuth().signOut()
+}
+
+export function saveUser (user) {
+  /*
+    ref is the root url of Database
+    .child() will nest itself to the Database (i.e. nest itself to the root
+    of Database)
+    ex:
+      Duckr
+        users
+          users.uid1
+          user.uid2
+          ...
+          ... etc
+        ducks
+   */
+  return ref.child(`users/${user.uid}`)
+    // .set() save user to location above and it will return a promise
+    .set(user)
+    .then(() => user) // return user object after saving
 }
