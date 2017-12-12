@@ -34,11 +34,11 @@ AuthenticateContainer.contextTypes = {
 }
 
 // Map state to props for state that component needs only
-function mapStateToProps (state) {
-  console.log('STATE', state)
+function mapStateToProps ({users}) {
+  console.log('STATE', users)
   return {
-    isFetching: state.isFetching,
-    error: state.error
+    isFetching: users.isFetching,
+    error: users.error
   }
 }
 

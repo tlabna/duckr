@@ -38,3 +38,33 @@ html, body {
 .center {
   text-align: center;
 }
+
+.baseTextAreaContainer {
+  display: flex;
+  height : 110px;
+  margin : 10px;
+}
+
+.baseTextArea {
+  border-radius: 3px;
+  flex         : 1;
+  font-size    : 18px;
+  padding      : 8px 10px;
+  resize       : none;
+}
+
+.darkBtn {
+  background   : #4a90e2;
+  border-radius: 5px;
+  border-style : none;
+  border       : 1px solid #4a90e2;
+  color        : #fff;
+  cursor       : pointer;
+  font-size    : 16px;
+  padding      : 10px 15px;
+  text-align   : center;
+}
+
+.darkBtn:hover {
+  background: #1877E6
+}
