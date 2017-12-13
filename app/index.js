@@ -13,9 +13,6 @@ const store = createStore(combineReducers(reducers), compose(
   window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f // start extension or return first argument
 ))
 
-console.log(store)
-console.log(store.getState())
-
 function checkAuth (component) {
   return restricted(component, store)
 }

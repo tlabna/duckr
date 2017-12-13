@@ -25,14 +25,14 @@ class DuckContainer extends React.Component {
     router: PropTypes.object.isRequired
   }
 
-  goToProfile (e) {
-    e.stopPropagatiion()
+  goToProfile = (e) => {
+    e.stopPropagation()
     this.context.router.history.push(`/${this.props.duck.uid}`)
   }
 
-  handleClick (e) {
-    e.stopPropagatiion()
-    this.context.router.push(`/duck-detail/${this.props.duck.duckId}`)
+  handleClick = (e) => {
+    e.stopPropagation()
+    this.context.router.history.push(`/duck-detail/${this.props.duck.duckId}`)
   }
 
   render () {
