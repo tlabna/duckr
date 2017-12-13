@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom'
 import { container, innerContainer } from './styles.css'
 import { bindActionCreators } from 'redux'
 import * as useractionCreators from 'redux/modules/users'
+import * as usersLikesActionCreators from 'redux/modules/usersLikes'
 import { formatUserInfo } from 'helpers/utils'
 import { firebaseAuth } from 'config/constants'
 
@@ -17,6 +18,7 @@ class MainContainer extends React.Component {
         const userInfo = formatUserInfo(userData.displayName, userData.photoURL, user.uid)
         this.props.authUser(user.uid)
         this.props.fetchingUserSuccess(user.uid, userInfo, Date.now())
+        this.props.setUsersLikes()
         if (this.props.location.pathname === '/') {
           this.context.router.history.replace('feed')
         }
@@ -47,7 +49,8 @@ MainContainer.propTypes = {
   authUser: PropTypes.func.isRequired,
   fetchingUserSuccess: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  removeFetchingUser: PropTypes.func.isRequired
+  removeFetchingUser: PropTypes.func.isRequired,
+  setUsersLikes: PropTypes.func.isRequired
 }
 
 MainContainer.contextTypes = {
@@ -62,7 +65,7 @@ function mapStateToProps ({users}) {
 }
 
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators(useractionCreators, dispatch)
+  return bindActionCreators({...useractionCreators, ...usersLikesActionCreators}, dispatch)
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MainContainer))
