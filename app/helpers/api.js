@@ -28,3 +28,14 @@ export function saveDuck (duck) {
     saveLikeCount(duckId)
   ]).then(() => ({...duck, duckId}))
 }
+
+export function listenToFeed (cb, errorCb) {
+  ref.child('ducks').on('value', (snapshot) => {
+    const feed = snapshot.val() || {}
+    const sortedIds = Object.keys(feed).sort((a, b) => {
+      return feed[b].timestamp - feed[a].timestamp
+    })
+    // eslint-disable-next-line standard/no-callback-literal
+    cb({feed, sortedIds})
+  }, errorCb)
+}
