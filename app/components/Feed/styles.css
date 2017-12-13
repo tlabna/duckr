@@ -1,0 +1,17 @@
+.newDuckContainer {
+  background: #4a90e2;
+  color     : #fff;
+  composes  : baseDuckContainer from 'sharedStyles/styles.css';
+  text-align: center;
+}
+
+.newDuckContainer:hover {
+  background: #1877E6;
+  color     : #fff;
+}
+
+.header {
+  font-size  : 40px;
+  font-weight: 100;
+  text-align : center;
+}
