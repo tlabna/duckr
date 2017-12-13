@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { default as ReactModal } from 'react-modal' // Calling ReactModal since package uses name Modal as well
 import { newDuckTop, pointer, newDuckInputContainer,
   newDuckInput, submitDuckBtn, darkBtn } from './styles.css'
+  import { formatDuck } from 'helpers/utils'
 
 // Need to properly hide the application from screenreaders and other
 // assistive technologies while the modal is open
@@ -27,13 +28,13 @@ Modal.propTypes = {
   isSubmitDisabled: PropTypes.bool.isRequired,
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
-  updateDuckText: PropTypes.func.isRequired
+  updateDuckText: PropTypes.func.isRequired,
+  duckFanout: PropTypes.func.isRequired
 }
 
 export default function Modal (props) {
   function submitDuck () {
-    console.log(props.duckText)
-    console.log(props.user)
+    props.duckFanout(formatDuck(props.duckText, props.user))
   }
 
   return (

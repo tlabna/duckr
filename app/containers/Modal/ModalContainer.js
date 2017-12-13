@@ -3,6 +3,7 @@ import { Modal } from 'components'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as modalActionCreators from 'redux/modules/modal'
+import * as duckActionCreators from 'redux/modules/ducks'
 
 /*
 * Removed react container component since there is no need for it.
@@ -31,7 +32,7 @@ function mapStateToProps ({ modal, users }) {
 }
 
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators(modalActionCreators, dispatch)
+  return bindActionCreators({...modalActionCreators, ...duckActionCreators}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Modal)
