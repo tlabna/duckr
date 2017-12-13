@@ -30,6 +30,7 @@ export function saveDuck (duck) {
 }
 
 export function listenToFeed (cb, errorCb) {
+  // .on sets up a socket between firebase and browser (check for changes in firebase)
   ref.child('ducks').on('value', (snapshot) => {
     const feed = snapshot.val() || {}
     const sortedIds = Object.keys(feed).sort((a, b) => {
@@ -38,4 +39,29 @@ export function listenToFeed (cb, errorCb) {
     // eslint-disable-next-line standard/no-callback-literal
     cb({feed, sortedIds})
   }, errorCb)
+}
+
+export function fetchUsersLikes (uid) {
+  // .once = fetch the value once
+  return ref.child(`usersLikes/${uid}`).once('value')
+    .then((snapshot) => snapshot.val() || {})
+}
+
+export function saveToUsersLikes (uid, duckId) {
+  return ref.child(`usersLikes/${uid}/${duckId}`).set(true)
+}
+
+export function deleteFromUsersLikes (uid, duckId) {
+  return ref.child(`usersLikes/${uid}/${duckId}`).set(null)
+}
+
+export function incrementNumberOfLikes (duckId) {
+  return ref.child(`likeCount/${duckId}`)
+    // .transaction() makes sure if there are simultaneous like all will go through
+    .transaction((currentValue = 0) => currentValue + 1)
+}
+
+export function decrementNumberOfLikes (duckId) {
+  return ref.child(`likeCount/${duckId}`)
+    .transaction((currentValue = 0) => currentValue - 1)
 }
