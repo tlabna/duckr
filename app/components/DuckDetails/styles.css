@@ -1,0 +1,32 @@
+.mainContainer {
+  margin : 20px;
+  padding: 20px;
+}
+
+.container {
+  display       : flex;
+  flex-direction: row;
+}
+
+.content {
+  flex: 4;
+}
+
+.repliesContainer {
+  flex: 3;
+}
+
+.replyTextAreaContainer {
+  composes      : baseTextAreaContainer from 'sharedStyles/styles.css';
+  display       : flex;
+  flex-direction: column;
+  height        : 160px;
+  margin        : 15px auto;
+  width         : 70%;
+}
+
+.replyTextArea {
+  border  : 1px solid #ccc;
+  composes: baseTextArea from 'sharedStyles/styles.css';
+  margin  : 10px 0;
+}

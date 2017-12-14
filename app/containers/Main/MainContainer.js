@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { container, innerContainer } from './styles.css'
 import { bindActionCreators } from 'redux'
-import * as useractionCreators from 'redux/modules/users'
+import * as userActionCreators from 'redux/modules/users'
 import * as usersLikesActionCreators from 'redux/modules/usersLikes'
 import { formatUserInfo } from 'helpers/utils'
 import { firebaseAuth } from 'config/constants'
@@ -65,7 +65,7 @@ function mapStateToProps ({users}) {
 }
 
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators({...useractionCreators, ...usersLikesActionCreators}, dispatch)
+  return bindActionCreators({...userActionCreators, ...usersLikesActionCreators}, dispatch)
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MainContainer))
