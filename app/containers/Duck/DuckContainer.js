@@ -27,12 +27,12 @@ class DuckContainer extends React.Component {
 
   goToProfile = (e) => {
     e.stopPropagation()
-    this.context.router.history.push(`/${this.props.duck.uid}`)
+    this.context.router.history.push(`/${this.props.duck.get('uid')}`)
   }
 
   handleClick = (e) => {
     e.stopPropagation()
-    this.context.router.history.push(`/duck-detail/${this.props.duck.duckId}`)
+    this.context.router.history.push(`/duck-detail/${this.props.duck.get('duckId')}`)
   }
 
   render () {
@@ -48,7 +48,7 @@ class DuckContainer extends React.Component {
 // Second argument will be props passed down to this component (from Feed.js)
 function mapStateToProps ({ducks, likeCount, usersLikes}, props) {
   return {
-    duck: ducks[props.duckId],
+    duck: ducks.get(props.duckId),
     hideLikeCount: props.hideLikeCount,
     hideReplyBtn: props.hideReplyBtn,
     isLiked: usersLikes[props.duckId] === true,

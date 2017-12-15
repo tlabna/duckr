@@ -4,6 +4,7 @@ import { default as ReactModal } from 'react-modal' // Calling ReactModal since 
 import { newDuckTop, pointer, newDuckInputContainer,
   newDuckInput, submitDuckBtn, darkBtn } from './styles.css'
 import { formatDuck } from 'helpers/utils'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 
 // Need to properly hide the application from screenreaders and other
 // assistive technologies while the modal is open
@@ -24,7 +25,7 @@ const modalStyles = {
 Modal.propTypes = {
   duckText: PropTypes.string.isRequired,
   isOpen: PropTypes.bool.isRequired,
-  user: PropTypes.object.isRequired,
+  user: ImmutablePropTypes.map.isRequired,
   isSubmitDisabled: PropTypes.bool.isRequired,
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,

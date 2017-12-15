@@ -22,9 +22,10 @@ class ModalContainer extends React.Component {
 
 function mapStateToProps ({ modal, users }) {
   const duckTextLength = modal.duckText.length
+  const userId = users.get('authedId') || {}
 
   return {
-    user: users[users.authedId] ? users[users.authedId].info : {},
+    user: users.get(userId) ? users.getIn([userId, 'info']) : Map(), // users[users.authedId] ? users[users.authedId].info : {},
     duckText: modal.duckText,
     isOpen: modal.isOpen,
     isSubmitDisabled: duckTextLength <= 0 || duckTextLength > 140

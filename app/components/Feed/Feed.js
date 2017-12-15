@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { newDuckContainer, header } from './styles.css'
 import { errorMsg } from 'sharedStyles/styles.css'
 import { DuckContainer } from 'containers'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 
 function NewDucksAvailable ({ handleClick }) {
   return (
@@ -17,7 +18,7 @@ NewDucksAvailable.propTypes = {
 }
 
 Feed.propTypes = {
-  duckIds: PropTypes.array.isRequired,
+  duckIds: ImmutablePropTypes.list.isRequired, // PropTypes.instanceOf(List) w/o react-immutable-proptypes
   newDucksAvailable: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
@@ -31,9 +32,9 @@ export default function Feed (props) {
       <div>
         {props.newDucksAvailable &&
           <NewDucksAvailable handleClick={props.resetNewDucksAvailable} />}
-        {props.duckIds.length === 0 &&
+        {props.duckIds.size === 0 && // Immutable JS uses .size instead of .length (duckIds is an immutable List)
           <p className={header}>{'This is unfortunate. '}<br />{' It appears there are no ducks yet.'}</p>}
-        {props.duckIds.map((id) => (
+        {props.duckIds.map((id) => ( // Immutable JS has .map property just like JS
           <DuckContainer
             duckId={id}
             key={id} />

@@ -6,10 +6,11 @@ import { DuckDetails } from 'components'
 import * as duckActionCreators from 'redux/modules/ducks'
 import * as likeCountActionCreators from 'redux/modules/likeCount'
 import * as repliesActionCreators from 'redux/modules/replies'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 
 class DuckDetailsContainer extends React.Component {
   static propTypes = {
-    authedUser: PropTypes.object.isRequired,
+    authedUser: ImmutablePropTypes.map.isRequired,
     duckId: PropTypes.string.isRequired,
     isFetching: PropTypes.bool.isRequired,
     error: PropTypes.string.isRequired,
@@ -45,12 +46,13 @@ class DuckDetailsContainer extends React.Component {
 
 function mapStateToProps ({ ducks, likeCount, users }, props) {
   const duckId = props.match.params.duckId
+  const userId = users.get('authedId') || ''
   return {
     duckId,
-    authedUser: users[users.authedId].info,
-    isFetching: ducks.isFetching || likeCount.isFetching,
-    error: ducks.error,
-    duckAlreadyFetched: !!ducks[duckId] // Match to a boolean -> returns true/false
+    authedUser: users.getIn([userId, 'info']), // users[users.authedId].info
+    isFetching: ducks.get('isFetching') || likeCount.isFetching,
+    error: ducks.get('error'),
+    duckAlreadyFetched: !!ducks.get(duckId) // Match to a boolean -> returns true/false
   }
 }
 

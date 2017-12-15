@@ -59,8 +59,8 @@ MainContainer.contextTypes = {
 
 function mapStateToProps ({users}) {
   return {
-    isAuthed: users.isAuthed,
-    isFetching: users.isFetching
+    isAuthed: users.get('isAuthed'),
+    isFetching: users.get('isFetching')
   }
 }
 

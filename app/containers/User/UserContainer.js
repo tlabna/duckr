@@ -45,17 +45,17 @@ class UserContainer extends React.Component {
 
 function mapStateToProps ({users, usersDucks}, props) {
   const uid = props.match.params.uid
-  const user = users[uid]
+  const user = users.get(uid)
   const noUser = typeof user === 'undefined'
   const specificUsersDucks = usersDucks[uid]
   return {
     noUser,
-    isFetching: users.isFetching || usersDucks.isFetching,
-    error: users.error || usersDucks.error,
+    isFetching: users.get('isFetching') || usersDucks.isFetching,
+    error: users.get('error') || usersDucks.error,
     duckIds: specificUsersDucks ? specificUsersDucks.duckIds : [],
-    lastUpdatedUser: user ? user.lastUpdated : 0,
+    lastUpdatedUser: user ? user.get('lastUpdated') : 0,
     lastUpdatedDucks: specificUsersDucks ? specificUsersDucks.lastUpdated : 0,
-    name: noUser ? '' : user.info.name
+    name: noUser ? '' : user.getIn(['info', 'name'])
   }
 }
 

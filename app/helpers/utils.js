@@ -8,12 +8,12 @@ export function formatUserInfo (name, avatar, uid) {
   }
 }
 
-export function formatDuck (text, {name, avatar, uid}) {
+export function formatDuck (text, user) {
   return {
     text,
-    name,
-    avatar,
-    uid,
+    name: user.get('name'),
+    avatar: user.get('avatar'),
+    uid: user.get('uid'),
     timestamp: Date.now()
   }
 }
@@ -39,12 +39,12 @@ export function staleReplies (timestamp) {
   return getMilliseconds(timestamp) > repliesExpirationLength
 }
 
-export function formatReply ({name, uid, avatar}, reply) {
+export function formatReply (authedUser, reply) {
   return {
-    name,
+    name: authedUser.get('name'),
+    avatar: authedUser.get('avatar'),
+    uid: authedUser.get('uid'),
     reply,
-    uid,
-    avatar,
     timestamp: Date.now()
   }
 }

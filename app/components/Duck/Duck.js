@@ -8,15 +8,27 @@ import {
   header, text, likeReplyContainer, icon, likedIcon, author
 } from './styles.css'
 
+import ImmutablePropTypes from 'react-immutable-proptypes'
+
+/*
+Note. If I didn't use react-immutable-proptypes, then duck would be:
+import { Map } from immutable
 Duck.propTypes = {
-  duck: PropTypes.shape({
+  duck: PropTypes.instanceOf(Map)
+}
+
+The issue with this, is that you can't see duck properties, so I decided to use
+the library above to handle PropTypes
+ */
+Duck.propTypes = {
+  duck: ImmutablePropTypes.contains({
     avatar: PropTypes.string.isRequired,
     duckId: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
     timestamp: PropTypes.number.isRequired,
     uid: PropTypes.string.isRequired
-  }),
+  }).isRequired,
   onClick: PropTypes.func,
   numberOfLikes: PropTypes.number,
   isLiked: PropTypes.bool.isRequired,
@@ -35,20 +47,20 @@ export default function Duck (props) {
       className={duckContainer}
       style={{cursor: props.hideReplyBtn === true ? 'default' : 'pointer'}}
       onClick={props.onClick}>
-      <img src={props.duck.avatar} className={avatar} />
+      <img src={props.duck.get('avatar')} className={avatar} />
       <div className={contentContainer}>
         <div className={header}>
-          <div onClick={props.goToProfile} className={author}>{props.duck.name}</div>
-          <div>{formatTimestamp(props.duck.timestamp)}</div>
+          <div onClick={props.goToProfile} className={author}>{props.duck.get('name')}</div>
+          <div>{formatTimestamp(props.duck.get('timestamp'))}</div>
         </div>
-        <div className={text}>{props.duck.text}</div>
+        <div className={text}>{props.duck.get('text')}</div>
         <div className={likeReplyContainer}>
           {!props.hideReplyBtn &&
             <Reply className={icon} />}
           <div className={actionContainer}>
             <Star
               className={starIcon}
-              onClick={(e) => starFn(props.duck.duckId, e)} />
+              onClick={(e) => starFn(props.duck.get('duckId'), e)} />
             {!props.hideLikeCount &&
               <div>{props.numberOfLikes}</div>}
           </div>

@@ -6,6 +6,7 @@ import {
 import { subHeader, darkBtn, errorMsg } from 'sharedStyles/styles.css'
 import { DuckContainer, RepliesContainer } from 'containers'
 import { formatReply } from 'helpers/utils'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 
 Reply.propTypes = {
   submit: PropTypes.func.isRequired
@@ -37,7 +38,7 @@ function Reply ({ submit }) {
 }
 
 DuckDetails.propTypes = {
-  authedUser: PropTypes.object.isRequired,
+  authedUser: ImmutablePropTypes.map.isRequired,
   duckId: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,

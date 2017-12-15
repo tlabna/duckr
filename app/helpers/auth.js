@@ -7,7 +7,8 @@ export function auth () {
 
 export function checkIfAuthed (store) {
   // Ignoring Firebase.
-  return store.getState().users.isAuthed
+  console.log(store.getState())
+  return store.getState().users.get('isAuthed')
 }
 
 export function logout () {

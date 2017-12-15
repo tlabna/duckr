@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Feed } from 'components'
 import * as feedActionCreators from 'redux/modules/feed'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 
 class FeedContainer extends React.Component {
   componentDidMount () {
@@ -28,17 +29,24 @@ FeedContainer.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   setAndHandleFeedListener: PropTypes.func.isRequired,
   resetNewDucksAvailable: PropTypes.func.isRequired,
-  duckIds: PropTypes.array.isRequired
+  duckIds: ImmutablePropTypes.list.isRequired // PropTypes.instanceOf(List) w/o react-immutable-proptypes
 }
 
 function mapStateToProps ({feed}) {
-  const { newDucksAvailable, error, isFetching, duckIds } = feed
+  // const { newDucksAvailable, error, isFetching, duckIds } = feed
+
+  // return {
+  //   newDucksAvailable,
+  //   error,
+  //   isFetching,
+  //   duckIds
+  // }
 
   return {
-    newDucksAvailable,
-    error,
-    isFetching,
-    duckIds
+    newDucksAvailable: feed.get('newDucksAvailable'),
+    error: feed.get('error'),
+    isFetching: feed.get('isFetching'),
+    duckIds: feed.get('duckIds')
   }
 }
 
