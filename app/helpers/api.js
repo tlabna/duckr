@@ -31,13 +31,16 @@ export function saveDuck (duck) {
 
 export function listenToFeed (cb, errorCb) {
   // .on sets up a socket between firebase and browser (check for changes in firebase)
+  let timesCalled = 0
   ref.child('ducks').on('value', (snapshot) => {
     const feed = snapshot.val() || {}
     const sortedIds = Object.keys(feed).sort((a, b) => {
       return feed[b].timestamp - feed[a].timestamp
     })
+
+    let initialFetch = timesCalled++ <= 0
     // eslint-disable-next-line standard/no-callback-literal
-    cb({feed, sortedIds})
+    cb({feed, sortedIds}, initialFetch)
   }, errorCb)
 }
 

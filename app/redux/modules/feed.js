@@ -1,7 +1,7 @@
 import { addListener } from 'redux/modules/listeners'
 import { listenToFeed } from 'helpers/api'
 import { addMultipleDucks } from 'redux/modules/ducks'
-import { fromJS, List } from 'immutable'
+import { fromJS } from 'immutable'
 
 const SETTING_FEED_LISTENER = 'SETTING_FEED_LISTENER'
 const SETTING_FEED_LISTENER_FAILURE = 'SETTING_FEED_LISTENER_FAILURE'
@@ -44,7 +44,6 @@ export function resetNewDucksAvailable () {
 }
 
 export function setAndHandleFeedListener () {
-  let initialFetch = true
   return function (dispatch, getState) {
     if (getState().listeners.get('feed') === true) {
       return
@@ -53,7 +52,7 @@ export function setAndHandleFeedListener () {
     dispatch(addListener('feed'))
     dispatch(settingFeedListener())
 
-    listenToFeed(({feed, sortedIds}) => {
+    listenToFeed(({feed, sortedIds}, initialFetch) => {
       dispatch(addMultipleDucks(feed))
       initialFetch === true
         ? dispatch(settingFeedListenerSuccess(sortedIds))
@@ -95,7 +94,7 @@ export default function feed (state = initialState, action) {
       })
     case RESET_NEW_DUCKS_AVAILABLE:
       return state.merge({
-        duckIds: state.get('newDucksToAdd').concat(state.get('duckIds')), // [...state.newDucksToAdd, ...state.ducksIds]
+        duckIds: state.get('newDucksToAdd').concat(state.get('duckIds')), // [...state.newDucksToAdd, ...state.duckIds]
         newDucksToAdd: [],
         newDucksAvailable: false
       })
