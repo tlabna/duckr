@@ -5,19 +5,20 @@ import {
   cushion, center, author } from './styles.css'
 import { errorMsg, subHeader } from 'sharedStyles/styles.css'
 import { formatTimestamp } from 'helpers/utils'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 
 Reply.propTypes = {
-  comment: PropTypes.object.isRequired
+  comment: ImmutablePropTypes.map.isRequired
 }
 
 function Reply ({ comment }) {
   return (
     <div className={replyContainer}>
-      <img src={comment.avatar} alt={comment.name} className={avatar} />
+      <img src={comment.get('avatar')} alt={comment.get('name')} className={avatar} />
       <div>
-        <div className={author}>{comment.name}</div>
-        <div className={cushion}>{formatTimestamp(comment.timestamp)}</div>
-        <div className={cushion}>{comment.reply}</div>
+        <div className={author}>{comment.get('name')}</div>
+        <div className={cushion}>{formatTimestamp(comment.get('timestamp'))}</div>
+        <div className={cushion}>{comment.get('reply')}</div>
       </div>
     </div>
   )
@@ -26,11 +27,13 @@ function Reply ({ comment }) {
 Replies.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
-  replies: PropTypes.object
+  replies: ImmutablePropTypes.map
 }
 
 export default function Replies ({isFetching, error, replies}) {
-  const replyIds = Object.keys(replies)
+  // const replyIds = Object.keys(replies)
+  const [...replyIds] = replies.keys()
+
   return (
     <div>
       {error &&
@@ -40,7 +43,7 @@ export default function Replies ({isFetching, error, replies}) {
         : (
           <div>
             <h1 className={header}>{'Replies'}</h1>
-            {replyIds.map((replyId) => (<Reply key={replyId} comment={replies[replyId]} />))}
+            {replyIds.map((replyId) => (<Reply key={replyId} comment={replies.get(replyId)} />))}
           </div>
         )
       }

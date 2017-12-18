@@ -1,5 +1,6 @@
 import { fetchUsersLikes, saveToUsersLikes, deleteFromUsersLikes,
   incrementNumberOfLikes, decrementNumberOfLikes } from 'helpers/api'
+import { Map } from 'immutable'
 
 export const ADD_LIKE = 'ADD_LIKE'
 export const REMOVE_LIKE = 'REMOVE_LIKE'
@@ -84,43 +85,39 @@ export function setUsersLikes () {
   }
 }
 
-const initialState = {
+const initialState = Map({
   isFetching: false,
   error: ''
-}
+})
 
 export default function usersLikes (state = initialState, action) {
   switch (action.type) {
     case FETCHING_LIKES:
-      return {
-        ...state,
+      return state.merge({
         isFetching: true
-      }
+      })
     case FETCHING_LIKES_FAILURE:
-      return {
-        ...state,
+      return state.merge({
         isFetching: false,
         error: action.error
-      }
+      })
     case FETCHING_LIKES_SUCCESS:
-      return {
-        ...state,
+      return state.mergeDeep({
         isFetching: false,
-        error: '',
-        ...action.likes
-      }
+        error: ''
+      }, action.likes)
     case ADD_LIKE:
-      return {
-        ...state,
+      return state.merge({
         [action.duckId]: true
-      }
+      })
     case REMOVE_LIKE:
-      return Object.keys(state)
-        .filter((duckId) => action.duckId !== duckId)
-        .reduce((prev, current) => {
-          prev[current] = state[current]
-          return prev
-        }, {})
+      return state.delete(action.duckId)
+      // return Object.keys(state)
+      //   .filter((duckId) => action.duckId !== duckId)
+      //   .reduce((prev, current) => {
+      //     prev[current] = state[current]
+      //     return prev
+      //   }, {})
     default:
       return state
   }

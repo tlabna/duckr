@@ -50,7 +50,7 @@ function mapStateToProps ({ ducks, likeCount, users }, props) {
   return {
     duckId,
     authedUser: users.getIn([userId, 'info']), // users[users.authedId].info
-    isFetching: ducks.get('isFetching') || likeCount.isFetching,
+    isFetching: ducks.get('isFetching') || likeCount.get('isFetching'),
     error: ducks.get('error'),
     duckAlreadyFetched: !!ducks.get(duckId) // Match to a boolean -> returns true/false
   }

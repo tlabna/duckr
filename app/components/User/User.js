@@ -3,13 +3,14 @@ import PropTypes from 'prop-types'
 import { userContainer, header } from './styles.css'
 import { errorMsg } from 'sharedStyles/styles.css'
 import { DuckContainer } from 'containers'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 
 User.propTypes = {
   noUser: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
-  duckIds: PropTypes.array.isRequired
+  duckIds: ImmutablePropTypes.list.isRequired
 }
 
 export default function User (props) {
@@ -28,7 +29,7 @@ export default function User (props) {
                 {props.duckIds.map((id) => {
                   return <DuckContainer duckId={id} key={id} />
                 })}
-                {props.duckIds.length === 0 &&
+                {props.duckIds.size === 0 &&
                   <p className={header}>
                     {`It looks like ${props.name.split(' ')[0]} hasn't made any ducks yet.`}
                   </p>}

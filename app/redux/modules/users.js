@@ -84,7 +84,7 @@ export function removeFetchingUser () {
 }
 
 const initialUserState = fromJS({
-  lastupdated: 0,
+  lastUpdated: 0,
   info: {
     name: '',
     uid: '',

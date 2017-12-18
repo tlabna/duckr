@@ -5,12 +5,14 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as repliesActionCreators from 'redux/modules/replies'
 import { staleReplies } from 'helpers/utils'
+import { Map } from 'immutable'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 
 class RepliesContainer extends React.Component {
   static propTypes = {
     isFetching: PropTypes.bool.isRequired,
     error: PropTypes.string.isRequired,
-    replies: PropTypes.object,
+    replies: ImmutablePropTypes.map,
     lastUpdated: PropTypes.number.isRequired,
     duckId: PropTypes.string.isRequired,
     fetchAndHandleReplies: PropTypes.func.isRequired
@@ -18,7 +20,7 @@ class RepliesContainer extends React.Component {
 
   static defaultProps = {
     lastUpdated: 0,
-    replies: {}
+    replies: Map()
   }
 
   componentDidMount () {
@@ -39,11 +41,15 @@ class RepliesContainer extends React.Component {
 }
 
 function mapStateToProps (state, props) {
-  const duckRepliesInfo = state.replies[props.duckId] || {}
-  const { lastUpdated, replies } = duckRepliesInfo
+  const duckRepliesInfo = state.replies.get(props.duckId) || Map()
+
+  // const { lastUpdated, replies } = duckRepliesInfo
+  const lastUpdated = duckRepliesInfo.get('lastUpdated')
+  const replies = duckRepliesInfo.get('replies')
+
   return {
-    isFetching: state.replies.isFetching,
-    error: state.replies.error,
+    isFetching: state.replies.get('isFetching'),
+    error: state.replies.get('error'),
     lastUpdated,
     replies
   }
