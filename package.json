@@ -13,6 +13,10 @@
   },
   "author": "",
   "license": "ISC",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/tlabna/duckr.git"
+  },
   "dependencies": {
     "firebase": "^4.8.0",
     "history": "^4.7.2",
