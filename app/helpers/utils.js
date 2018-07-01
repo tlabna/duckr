@@ -1,6 +1,8 @@
 import { usersDucksExpirationLength, userExpirationLength, repliesExpirationLength } from 'config/constants'
 
 export function formatUserInfo (name, avatar, uid) {
+  avatar = `${avatar}?height=100&width=100`
+
   return {
     name,
     avatar,
